@@ -77,7 +77,7 @@ function nftgallery_toplevel_page() {
 					</select>
 					<p>Choose which type of NFTs that you would like to show, either from a collection or a single wallet address.</p>
 
-					<label for="nftgallery-id" style="font-weight: bold;" class="osid">Wallet Address</label>
+					<label for="nftgallery-id" style="font-weight: bold;" class="osid"><?php _e('Wallet Address','nft-gallery'); ?></label>
 					<input type="text" name="nftgallery-id" style="width: 100%;" value="<?php echo esc_html($nftgalleryID); ?>" required="">
 					<p class="osidcaption">Please specify your wallet address.</p>
 
