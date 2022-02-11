@@ -64,7 +64,7 @@ function nftgallery_function( $atts ){
             }
         }
         
-        echo $nfts;
+        echo wp_kses_post($nfts);
         return ob_get_clean(); 
 }
 add_shortcode('nftgallery', 'nftgallery_function');
