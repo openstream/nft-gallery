@@ -1,6 +1,6 @@
 <?php
 /**
-* WPOpenSea - Admin Functions
+* NFT Gallery - Admin Functions
 *
 * In this file,
 * you will find all functions related to the plugin settings in WP-Admin area.
@@ -13,88 +13,85 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-function wpopensea_admin_js($hook) {
-	if( 'toplevel_page_wpopensea' != $hook ) {
+function nftgallery_admin_js($hook) {
+	if( 'toplevel_page_nftgallery' != $hook ) {
 		return;
 	}
-wp_enqueue_script('wpopensea_admin_js_file', plugin_dir_url(__FILE__) . 'js/admin.js');
+wp_enqueue_script('nftgallery_admin_js_file', plugin_dir_url(__FILE__) . 'js/admin.js');
 }
-add_action('admin_enqueue_scripts', 'wpopensea_admin_js');
+add_action('admin_enqueue_scripts', 'nftgallery_admin_js');
 
-add_action( 'admin_menu', 'wpopensea_admin_menu' );
-function wpopensea_admin_menu() {
-	add_menu_page(__('NFT Gallery','wpopensea'), __('NFT Gallery','wpopensea'), 'manage_options', 'wpopensea', 'wpopensea_toplevel_page', 'dashicons-grid-view', 16 );
+add_action( 'admin_menu', 'nftgallery_admin_menu' );
+function nftgallery_admin_menu() {
+	add_menu_page(__('NFT Gallery','nftgallery'), __('NFT Gallery','nftgallery'), 'manage_options', 'nftgallery', 'nftgallery_toplevel_page', 'dashicons-grid-view', 16 );
 }
 
-function wpopensea_register_settings() {
-    register_setting('wpopensea-settings-group', 'wpopensea-api');
-    register_setting('wpopensea-settings-group', 'wpopensea-type');
-	register_setting('wpopensea-settings-group', 'wpopensea-limit');
-	register_setting('wpopensea-settings-group', 'wpopensea-id');
+function nftgallery_register_settings() {
+    register_setting('nftgallery-settings-group', 'nftgallery-api');
+    register_setting('nftgallery-settings-group', 'nftgallery-type');
+	register_setting('nftgallery-settings-group', 'nftgallery-limit');
+	register_setting('nftgallery-settings-group', 'nftgallery-id');
 }
-add_action('admin_init', 'wpopensea_register_settings');
+add_action('admin_init', 'nftgallery_register_settings');
 
-function wpopensea_toplevel_page() {
+function nftgallery_toplevel_page() {
 	// Permission check
 	if ( !current_user_can( 'manage_options' ) )  {
 		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 	}
 
 	// Get the default API key
-	if( get_option('wpopensea-api') ) {
-		$wpopenseaAPI = get_option('wpopensea-api'); }
-	else {
-		$wpopenseaAPI = 'b61c8a54123d4dcb9acc1b9c26a01cd1'; }
+	$nftgalleryAPI = get_option('nftgallery-api');
 
 	// Get the default type
-	if( get_option('wpopensea-type') ) {
-		$wpopenseaType = get_option('wpopensea-type'); }
+	if( get_option('nftgallery-type') ) {
+		$nftgalleryType = get_option('nftgallery-type'); }
 	else {
-		$wpopenseaType = 'collection'; }
+		$nftgalleryType = 'collection'; }
 
 	// Get the default limit
-	if( get_option('wpopensea-limit') ) {
-		$wpopenseaLimit = get_option('wpopensea-limit'); }
+	if( get_option('nftgallery-limit') ) {
+		$nftgalleryLimit = get_option('nftgallery-limit'); }
 	else {
-		$wpopenseaLimit = 18; }	
+		$nftgalleryLimit = 18; }	
 
 	// Get collection slug or wallet address
-	$wpopenseaID = get_option('wpopensea-id');
+	$nftgalleryID = get_option('nftgallery-id');
 ?>
 <div class="wpwrap">
 	<div class="card" style="border-radius: 10px;">	
-	<h1 style="padding-top: 15px; text-align: center;"><?php _e('NFT Gallery','wpopensea'); ?></h1>
+	<h1 style="padding-top: 15px; text-align: center;"><?php _e('NFT Gallery','nftgallery'); ?></h1>
 		<div class="form-wrap">
 			<form method="post" action="options.php">
-				<?php settings_fields('wpopensea-settings-group'); ?>
-				<?php do_settings_sections('wpopensea-settings-group'); ?>
-				<div class="form-field wpopensea-wrapper">
-					<label for="wpopensea-api" style="font-weight: bold;">OpenSea API Key</label>
-					<input type="text" style="width: 100%;" value="<?php esc_html_e( $wpopenseaAPI, 'wpopensea' ); ?>" name="wpopensea-api">
-					<p>In order to get your own API Key, you can <a href="https://docs.opensea.io/reference/request-an-api-key" target="_blank">Request an API key</a> here.</p>
+				<?php settings_fields('nftgallery-settings-group'); ?>
+				<?php do_settings_sections('nftgallery-settings-group'); ?>
+				<div class="form-field nftgallery-wrapper">
+					<label for="nftgallery-api" style="font-weight: bold;">OpenSea API Key</label>
+					<input type="text" style="width: 100%;" value="<?php esc_html_e( $nftgalleryAPI, 'nftgallery' ); ?>" name="nftgallery-api">
+					<p>In order to get the API Key, you can <a href="https://skybee.io/nftgallery-request-apikey/" target="_blank">Request an API key</a> here.</p>
 
-					<label for="wpopensea-type" style="font-weight: bold;">Type</label>
-					<select name="wpopensea-type" class="ostype">
-						<option value="collection" <?php if($wpopenseaType == 'collection') echo 'selected'; ?>>Collection</option>
-						<option value="owner" <?php if($wpopenseaType == 'owner') echo 'selected'; ?>>Owner</option>
+					<label for="nftgallery-type" style="font-weight: bold;">Type</label>
+					<select name="nftgallery-type" class="ostype">
+						<option value="collection" <?php if($nftgalleryType == 'collection') echo 'selected'; ?>>Collection</option>
+						<option value="owner" <?php if($nftgalleryType == 'owner') echo 'selected'; ?>>Owner</option>
 					</select>
 					<p>Choose which type of NFTs that you would like to show, either from a collection or a single wallet address.</p>
 
-					<label for="wpopensea-id" style="font-weight: bold;" class="osid">Wallet Address</label>
-					<input type="text" name="wpopensea-id" style="width: 100%;" value="<?php esc_html_e( $wpopenseaID, 'wpopensea' ); ?>" required="">
+					<label for="nftgallery-id" style="font-weight: bold;" class="osid">Wallet Address</label>
+					<input type="text" name="nftgallery-id" style="width: 100%;" value="<?php esc_html_e( $nftgalleryID, 'nftgallery' ); ?>" required="">
 					<p class="osidcaption">Please specify your wallet address.</p>
 
-					<label for="wpopensea-limit" style="font-weight: bold;">Limit</label>
-					<input type="number" name="wpopensea-limit" style="width: 60px;" value="<?php esc_html_e( $wpopenseaLimit, 'wpopensea' ); ?>">
+					<label for="nftgallery-limit" style="font-weight: bold;">Limit</label>
+					<input type="number" name="nftgallery-limit" style="width: 60px;" value="<?php esc_html_e( $nftgalleryLimit, 'nftgallery' ); ?>">
 					<p>Specify the number of NFTs to show.</p>				
 				</div>
 
 				<hr />
 				<h3>Shortcode</h3>
 				<?php
-				if($wpopenseaAPI){
+				if($nftgalleryAPI){
 					echo '<p>Copy and paste this shortcode directly into any post or page.</p>';
-					echo '<textarea style="width: 100%;" readonly="readonly">[wpopensea]</textarea>';
+					echo '<textarea style="width: 100%;" readonly="readonly">[nftgallery]</textarea>';
 				} else {
 					echo '<p style="color: red;">Problem detected! Please set your OpenSea API.</p>';
 				}

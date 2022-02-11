@@ -29,9 +29,9 @@ NFT Gallery is a WordPress plugin that helps you to add NFTs from OpenSea to you
   
 == Frequently Asked Questions ==
 
-= Do I need to provide OpenSea API Key? =
+= How do I get the OpenSea API Key? =
 
-We have provided the API Key on the plugin. However, you can also get your own API Key by submitting your request to OpenSea via this official URL : [https://docs.opensea.io/reference/request-an-api-key](https://docs.opensea.io/reference/request-an-api-key)
+You can visit this URL to get the API Key : [https://skybee.io/nftgallery-request-apikey/](https://skybee.io/nftgallery-request-apikey/)
   
 = How to uninstall the plugin? =
 

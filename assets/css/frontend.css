@@ -1,5 +1,5 @@
 /*
-** WPOpensea
+** NFT Gallery
 */
 .nft .image {
 	height: 170px;
@@ -61,7 +61,7 @@
     height: 150px;
   }
 
-  .wpopensea-wrapper:nth-last-child(2) {
+  .nftgallery-wrapper:nth-last-child(2) {
   	display: none;
   }
 }
