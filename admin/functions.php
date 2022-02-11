@@ -70,7 +70,7 @@ function nftgallery_toplevel_page() {
 					<input type="text" style="width: 100%;" value="<?php echo esc_html($nftgalleryAPI); ?>" name="nftgallery-api">
 					<p>In order to get the API Key, you can <a href="https://skybee.io/nftgallery-request-apikey/" target="_blank">Request an API key</a> here.</p>
 
-					<label for="nftgallery-type" style="font-weight: bold;">Type</label>
+					<label for="nftgallery-type" style="font-weight: bold;"><?php _e('Type','nft-gallery'); ?></label>
 					<select name="nftgallery-type" class="ostype">
 						<option value="collection" <?php if($nftgalleryType == 'collection') echo 'selected'; ?>>Collection</option>
 						<option value="owner" <?php if($nftgalleryType == 'owner') echo 'selected'; ?>>Owner</option>
@@ -81,7 +81,7 @@ function nftgallery_toplevel_page() {
 					<input type="text" name="nftgallery-id" style="width: 100%;" value="<?php echo esc_html($nftgalleryID); ?>" required="">
 					<p class="osidcaption">Please specify your wallet address.</p>
 
-					<label for="nftgallery-limit" style="font-weight: bold;">Limit</label>
+					<label for="nftgallery-limit" style="font-weight: bold;"><?php _e('Limit','nft-gallery'); ?></label>
 					<input type="number" name="nftgallery-limit" style="width: 60px;" value="<?php echo esc_html($nftgalleryLimit); ?>">
 					<p>Specify the number of NFTs to show.</p>				
 				</div>
