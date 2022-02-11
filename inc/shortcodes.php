@@ -16,6 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function nftgallery_function( $atts ){ 
         wp_enqueue_style( 'flexbox' );
         wp_enqueue_style( 'nftgallery' );
+        wp_enqueue_script( 'nftgallery' );
 
         $args = array(
             'headers'     => array(
@@ -45,11 +46,11 @@ function nftgallery_function( $atts ){
                     if($asset->name) { $title = $asset->name; } else { $title = '#'.$asset->token_id; }
                     
                     $nfts .= '<div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 nftgallery-wrapper">';
-                        $nfts .= '<div class="nft" onclick="window.open(\''.esc_html($asset->permalink, 'nftgallery').'\',\'mywindow\');">';
-                        $nfts .= '<div class="image" style="background-image: url('.esc_html($asset->image_preview_url, 'nftgallery').');"></div>';
+                        $nfts .= '<div class="nft" data-url="'.$asset->permalink.'">';
+                        $nfts .= '<div class="image" style="background-image: url('.$asset->image_preview_url.');"></div>';
                         $nfts .= '<div class="desc">
-                                    <div class="collection">'.esc_html($asset->collection->name, 'nftgallery').'</div>
-                                    <h2>'.esc_html($title, 'nftgallery').'</h2>
+                                    <div class="collection">'.$asset->collection->name.'</div>
+                                    <h2>'.$title.'</h2>
                                   </div>';
                         $nfts .= '</div>';
                     $nfts .= '</div>';
@@ -57,7 +58,7 @@ function nftgallery_function( $atts ){
                 }
                 if($type == 'collection'):
 
-                    $nfts .= '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 os-button-wrapper"><a href="https://opensea.io/collection/'.esc_html($id, 'nftgallery').'" class="view-opensea" target="_blank">View '.esc_html($asset->collection->name, 'nftgallery').' on OpenSea</a></div>';
+                    $nfts .= '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 os-button-wrapper"><a href="https://opensea.io/collection/'.$id.'" class="view-opensea" target="_blank">View '.$asset->collection->name.' on OpenSea</a></div>';
                 
                 endif;
                 $nfts .= '</div>';

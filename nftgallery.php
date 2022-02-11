@@ -6,7 +6,7 @@
  * Author: Hendra Setiawan
  * Author URI: https://hendra.skybee.io/
  * Version: 1.0.0
- * Text Domain: nftgallery
+ * Text Domain: nft-gallery
  * Written by: Hendra Setiawan - https://hendra.blog/about/
  */
 // Exit if accessed directly
@@ -25,6 +25,7 @@ require_once( NFTGALLERY_PLUGIN_PATH . 'admin/functions.php' );
 require_once( NFTGALLERY_PLUGIN_PATH . 'inc/shortcodes.php' );
 
 function nftgallery_assets() {
+    wp_register_script( 'nftgallery', plugin_dir_url( __FILE__ ).'assets/js/frontend.js' , array('jquery'), '', true );
     wp_register_style( 'flexbox', plugin_dir_url( __FILE__ ) . 'assets/css/flexboxgrid.min.css', false, NFTGALLERY_VERSION );
     wp_register_style( 'nftgallery', plugin_dir_url( __FILE__ ) . 'assets/css/frontend.css', false, NFTGALLERY_VERSION );
 }
