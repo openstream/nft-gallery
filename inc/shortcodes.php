@@ -28,7 +28,7 @@ function nftgallery_function( $atts ){
         $limit = get_option('nftgallery-limit');
         $id = get_option('nftgallery-id');
 
-        $request = wp_remote_get( 'https://api.opensea.io/api/v1/assets?format=json&limit='.$limit.'&offset=0&order_direction=asc&'.$type.'='.$id,$args );
+        $request = wp_remote_get( 'https://api.opensea.io/api/v1/assets?format=json&limit='.$limit.'&offset=0&order_direction=desc&'.$type.'='.$id,$args );
 
         ob_start();
         $nfts = '';
