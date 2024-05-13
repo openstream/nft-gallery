@@ -31,7 +31,11 @@ function nftgallery_function( $atts ){
         $id = get_option('nftgallery-id');
         $style = get_option('nftgallery-style');
 
-        $request = wp_remote_get('https://api.opensea.io/api/v2/chain/ethereum/account/'.$id.'/nfts', $args);
+        if ($type == 'owner') {
+            $request = wp_remote_get('https://api.opensea.io/api/v2/chain/ethereum/account/'.$id.'/nfts', $args);
+        } else {
+            $request = wp_remote_get('https://api.opensea.io/api/v2/collection/'.$id.'/nfts', $args);
+        }
         
         ob_start();
         $nfts = '';
@@ -42,7 +46,6 @@ function nftgallery_function( $atts ){
             $body = wp_remote_retrieve_body( $request );
 
             $data = json_decode( $body );
-
             if( ! empty( $data ) ) {
                 if($style == 'grid') {
                     wp_enqueue_style( 'flexbox' );
@@ -63,7 +66,7 @@ function nftgallery_function( $atts ){
                     }
                     if($type == 'collection'):
 
-                        $nfts .= '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 os-button-wrapper"><a href="https://opensea.io/collection/'.$id.'" class="view-opensea" target="_blank">View '.$asset->collection->name.' on OpenSea</a></div>';
+                        $nfts .= '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 os-button-wrapper"><a href="https://opensea.io/collection/'.$id.'" class="view-opensea" target="_blank">View '.$asset->name.' on OpenSea</a></div>';
                     
                     endif;
                     $nfts .= '</div>';
@@ -79,15 +82,15 @@ function nftgallery_function( $atts ){
                                            
                     $nfts .= '<div class="gallery-container nftgallery" id="lightgallery">';
                     $no = 1;
-                    foreach( $data->assets as $asset ) {
+                    foreach( $data->nfts as $asset ) {
                         $basename = basename($asset->image_url);
-                        if($asset->name) { $title = $asset->name; } else { $title = $asset->token_id; }
+                        if($asset->name) { $title = $asset->name; } else { $title = $asset->identifier; }
                         $title = strip_tags($title);
                         $title = preg_replace('#[^\w()/.%\-&]#'," ",$title);
                         
                         $nfts .= '<a data-src="'.$asset->image_url.'" data-download-url="false" class="gallery-item" data-sub-html=".caption'.$no.'">';
-                        $nfts .= '<img class="img-fluid" src="'.$asset->image_preview_url.'" />';
-                        $nfts .= '<div class="caption caption'.$no.'"><p class="nft-title">'.$title.'</p><p>Minted by <strong>'.$asset->creator->user->username.'</strong> in <strong>'.$asset->collection->name.'</strong></p><button class="openseaBtn" data-url="'.$asset->permalink.'">View on OpenSea</button></div>';
+                        $nfts .= '<img class="img-fluid" src="'.$asset->image_url.'" />';
+                        $nfts .= '<div class="caption caption'.$no.'"><p class="nft-title">'.$title.'</p><p>Collection: '.$asset->collection.'</strong></p><button class="openseaBtn" data-url="'.$asset->opensea_url.'">View on OpenSea</button></div>';
                         $nfts .= '</a>';
                         $no++;
                     }
