@@ -1,6 +1,42 @@
 /*
 ** NFT Gallery
 */
+.openseaBtn {
+  background-color: #2081e2;
+  border: 0;
+  margin-top: 10px;
+  padding: 5px 15px;
+  font-weight: bold;
+  border-radius: 5px;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.nftgallery .caption {
+  display: none;
+}
+
+p.nft-title {
+  font-size: 20px !important;
+  font-weight: bold;
+  line-height: 20px;
+}
+
+a#lg-download-1 {
+    display: none;
+}
+
+.nftgallery {
+  margin:  50px 0;
+}
+
+.gallery-item {
+  width: 200px;
+  display: inline-block;
+  padding: 5px;
+  cursor: pointer;
+}
+
 .nft .image {
 	height: 170px;
     border-radius: 15px 15px 0 0 !important;
@@ -54,6 +90,8 @@
     text-decoration: none;
     font-size:  14px;
     text-align: center;
+    text-decoration: none !important;
+    margin-bottom: 50px;
 }
 
 @media only screen and (max-width: 600px) {

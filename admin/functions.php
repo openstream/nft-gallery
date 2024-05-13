@@ -30,6 +30,7 @@ function nftgallery_register_settings() {
     register_setting('nftgallery-settings-group', 'nftgallery-api');
     register_setting('nftgallery-settings-group', 'nftgallery-type');
 	register_setting('nftgallery-settings-group', 'nftgallery-limit');
+	register_setting('nftgallery-settings-group', 'nftgallery-style');
 	register_setting('nftgallery-settings-group', 'nftgallery-id');
 }
 add_action('admin_init', 'nftgallery_register_settings');
@@ -48,6 +49,12 @@ function nftgallery_toplevel_page() {
 		$nftgalleryType = get_option('nftgallery-type'); }
 	else {
 		$nftgalleryType = 'collection'; }
+
+	// Get the default style
+	if( get_option('nftgallery-style') ) {
+		$nftgalleryStyle = get_option('nftgallery-style'); }
+	else {
+		$nftgalleryStyle = 'grid'; }		
 
 	// Get the default limit
 	if( get_option('nftgallery-limit') ) {
@@ -68,7 +75,7 @@ function nftgallery_toplevel_page() {
 				<div class="form-field nftgallery-wrapper">
 					<label for="nftgallery-api" style="font-weight: bold;"><?php _e('OpenSea API Key','nft-gallery'); ?></label>
 					<input type="text" style="width: 100%;" value="<?php echo esc_html($nftgalleryAPI); ?>" name="nftgallery-api">
-					<p>In order to get the API Key, you can <a href="https://skybee.io/nftgallery-request-apikey/" target="_blank">Request an API key</a> here.</p>
+					<p>In order to get the API Key, you can refer to this <a href="https://docs.opensea.io/reference/api-keys" target="_blank">OpenSea Docs</a>.</p>
 
 					<label for="nftgallery-type" style="font-weight: bold;"><?php _e('Type','nft-gallery'); ?></label>
 					<select name="nftgallery-type" class="ostype">
@@ -80,6 +87,13 @@ function nftgallery_toplevel_page() {
 					<label for="nftgallery-id" style="font-weight: bold;" class="osid"><?php _e('Wallet Address','nft-gallery'); ?></label>
 					<input type="text" name="nftgallery-id" style="width: 100%;" value="<?php echo esc_html($nftgalleryID); ?>" required="">
 					<p class="osidcaption">Please specify your wallet address.</p>
+
+					<label for="nftgallery-style" style="font-weight: bold;"><?php _e('Gallery Style','nft-gallery'); ?></label>
+					<select name="nftgallery-style" class="style">
+						<option value="grid" <?php if($nftgalleryStyle == 'grid') echo 'selected'; ?>>Grid</option>
+						<option value="photography" <?php if($nftgalleryStyle == 'photography') echo 'selected'; ?>>Photography</option>
+					</select>
+					<p>Choose which type of layout that you want to use.</p>					
 
 					<label for="nftgallery-limit" style="font-weight: bold;"><?php _e('Limit','nft-gallery'); ?></label>
 					<input type="number" name="nftgallery-limit" style="width: 60px;" value="<?php echo esc_html($nftgalleryLimit); ?>">
@@ -98,7 +112,7 @@ function nftgallery_toplevel_page() {
 				?>
 				<?php submit_button(__( 'Save Settings', 'nft-gallery' ), 'primary'); ?>
 			</form>		
-			<p style="text-align: center; border-top: 1px solid #eee; padding-top: 15px;">NFT Gallery. Made with <span class="dashicons dashicons-heart"></span> by <a href="https://hendra.skybee.io/" target="_blank">Hendra</a>.</p>
+			<p style="text-align: center; border-top: 1px solid #eee; padding-top: 15px;">NFT Gallery. Made with <span style="color: #f0b125;" class="dashicons dashicons-heart"></span> by Hendra from <a href="https://skybee.io/" target="_blank">Skybee.io</a></p>
 		</div>
 	</div>
 </div>

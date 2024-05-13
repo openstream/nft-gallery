@@ -3,9 +3,9 @@ Contributors: hendcorp
 Tags: opensea, nft, gallery
 Donate link: https://www.paypal.me/hendcorp/
 Requires at least: 5.1
-Tested up to: 5.9
+Tested up to: 6.2.1
 Requires PHP: 5.6
-Stable tag: 1.0.0
+Stable tag: 1.2.0
 License: GPLv2 or later
 
 The simplest way to add NFTs from OpenSea to WordPress site. Powered by OpenSea API.
@@ -16,12 +16,15 @@ NFT Gallery is a WordPress plugin that helps you to add NFTs from OpenSea to you
 **HOW TO CONFIGURE IT?**
 1. Install and activate the plugin.
 2. Go to NFT Gallery.
-3. Insert your OpenSea API Key. [Grab the API Key Here](https://skybee.io/nftgallery-request-apikey/)
+3. Insert your OpenSea API Key. [Check this OpenSea Docs](https://docs.opensea.io/reference/api-keys)
 4. Choose which type of NFTs that you would like to show, either from a collection or a single wallet address.
 5. Put your collection slug or wallet address.
 6. Specify the number of NFTs to show.
 7. Click Save Settings.
 8. Copy the shortcode to any post or page on your website.
+
+**Disclaimer**
+Please keep in mind that this plugin is powered by OpenSea API and it is only working if your NFTs were minted on **ERC-721** and **ERC-1155** token on **Ethereum Network**. According to OpenSea, **Polygon Network** will be supported on the upcoming updates. 
 
 == Installation ==
 1. Upload the plugin folder to your /wp-content/plugins/ folder.
@@ -31,7 +34,7 @@ NFT Gallery is a WordPress plugin that helps you to add NFTs from OpenSea to you
 == Frequently Asked Questions ==
 = How do I get the OpenSea API Key? =
 
-You can visit this URL to get the API Key : [https://skybee.io/nftgallery-request-apikey/](https://skybee.io/nftgallery-request-apikey/)
+You can visit this URL to get the API Key : [https://docs.opensea.io/reference/api-keys](https://docs.opensea.io/reference/api-keys)
 
 = What is Collection Slug? =
 
@@ -44,7 +47,24 @@ Simply deactivate and delete the plugin.
 == Screenshots ==
 1. This is how the NFTs will appears on your website.
 2. Admin User Interface.
+3. Photography layout.
+4. Lightbox on Photography layout.
 
 == Changelog ==
-= 1.0 =
+
+= 1.2.0 =
+* Fixed : Images were not showing on Grid mode.
+
+= 1.1.2 =
+* Bugs fixing.
+* Update compatibility with WordPress 6.2.1 
+
+= 1.1.1 =
+* Bugs fixing.
+* Added OpenSea button on the Photography mode. 
+
+= 1.1.0 =
+* Added new layout. 
+
+= 1.0.0 =
 * Plugin released. 
