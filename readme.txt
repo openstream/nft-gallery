@@ -1,11 +1,11 @@
 === NFT Gallery ===
-Contributors: hendcorp
+Contributors: hendcorp, openstream
 Tags: opensea, nft, gallery
 Donate link: https://www.paypal.me/hendcorp/
 Requires at least: 5.1
-Tested up to: 6.2.1
+Tested up to: 6.5.3
 Requires PHP: 5.6
-Stable tag: 1.2.0
+Stable tag: 1.3.0
 License: GPLv2 or later
 
 The simplest way to add NFTs from OpenSea to WordPress site. Powered by OpenSea API.
@@ -51,6 +51,9 @@ Simply deactivate and delete the plugin.
 4. Lightbox on Photography layout.
 
 == Changelog ==
+
+= 1.3.0 =
+* Added basic support for OpenSea API v2
 
 = 1.2.0 =
 * Fixed : Images were not showing on Grid mode.
