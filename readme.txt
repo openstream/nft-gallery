@@ -53,7 +53,8 @@ Simply deactivate and delete the plugin.
 == Changelog ==
 
 = 1.3.0 =
-* Added basic support for OpenSea API v2
+* Adds support for OpenSea API v2
+* Converts ipfs.io to cloudflare-ipfs.com image URLs for caching
 
 = 1.2.0 =
 * Fixed : Images were not showing on Grid mode.

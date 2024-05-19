@@ -5,8 +5,8 @@
 * In this file,
 * you will find all functions related to the shortcodes that are available on the plugin.
 *
-* @author   Hendra Setiawan
-* @version  1.0.0
+* @authors   Hendra Setiawan, Nick Weisser
+* @version  1.3.0
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -32,9 +32,9 @@ function nftgallery_function( $atts ){
         $style = get_option('nftgallery-style');
 
         if ($type == 'owner') {
-            $request = wp_remote_get('https://api.opensea.io/api/v2/chain/ethereum/account/'.$id.'/nfts', $args);
+            $request = wp_remote_get('https://api.opensea.io/api/v2/chain/ethereum/account/'.$id.'/nfts?limit='.$limit, $args);
         } else {
-            $request = wp_remote_get('https://api.opensea.io/api/v2/collection/'.$id.'/nfts', $args);
+            $request = wp_remote_get('https://api.opensea.io/api/v2/collection/'.$id.'/nfts?limit='.$limit, $args);
         }
         
         ob_start();
@@ -51,11 +51,31 @@ function nftgallery_function( $atts ){
                     wp_enqueue_style( 'flexbox' );
                     $nfts .= '<div class="row nftgallery">';
                     foreach( $data->nfts as $asset ) {
+                        $image_headers = @get_headers($asset->image_url, 1);
+                        if ($image_headers === false) { continue; }
+                        if (isset($image_headers['Content-Type']) && strpos($image_headers['Content-Type'], 'video') !== false) {
+                            continue; // Skip this iteration if the content type is a video
+                        }
+                        // IPFS images with parentheses wouldn't render ...
+                        // Parse URL
+                        $parsed_url = parse_url($asset->image_url);
+                        if ($parsed_url === false) {
+                            echo "<!-- Failed to parse URL: {$asset->image_url} -->\n";
+                            continue;
+                        }              
+                        // Manually encode the path
+                        $encoded_path = implode('/', array_map('rawurlencode', explode('/', $parsed_url['path'])));
+                        // Rebuild the URL
+                        $encoded_image_url = $parsed_url['scheme'] . '://' . $parsed_url['host'] . $encoded_path;
+
+                        // Replace ipfs.io with Cloudflare's IPFS gateway for caching
+                        $image_url = str_replace('https://ipfs.io/ipfs/', 'https://cloudflare-ipfs.com/ipfs/', $encoded_image_url);
+
                         if($asset->name) { $title = $asset->name; } else { $title = '#'.$asset->identifier; }
-                        
+
                         $nfts .= '<div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 nftgallery-wrapper">';
                             $nfts .= '<div class="nft" data-url="'.$asset->opensea_url.'">';
-                            $nfts .= '<div class="image" style="background-image: url('.$asset->image_url.');"></div>';
+                            $nfts .= '<div class="image" style="background-image: url(\''.$image_url.'\');"></div>';
                             $nfts .= '<div class="desc">
                                         <div class="collection">'.$asset->collection.'</div>
                                         <h2>'.$title.'</h2>
@@ -83,6 +103,11 @@ function nftgallery_function( $atts ){
                     $nfts .= '<div class="gallery-container nftgallery" id="lightgallery">';
                     $no = 1;
                     foreach( $data->nfts as $asset ) {
+                        $image_headers = @get_headers($asset->image_url, 1);
+                        if ($image_headers === false) { continue; }
+                        if (isset($image_headers['Content-Type']) && strpos($image_headers['Content-Type'], 'video') !== false) {
+                            continue; // Skip this iteration if the content type is a video
+                        }
                         $basename = basename($asset->image_url);
                         if($asset->name) { $title = $asset->name; } else { $title = $asset->identifier; }
                         $title = strip_tags($title);
